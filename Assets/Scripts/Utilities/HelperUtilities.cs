@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public static class HelperUtilities
 {
-    public static Camera mainCamera;
+    public static UnityEngine.Camera mainCamera;
     /// <summary>
     /// Empty string debug check
     /// </summary>
@@ -139,7 +139,7 @@ public static class HelperUtilities
     /// </summary>
     public static Vector3 GetMouseWorldPosition()
     {
-        if (mainCamera == null) mainCamera = Camera.main;
+        if (mainCamera == null) mainCamera = UnityEngine.Camera.main;
 
         Vector3 mouseScreenPosition = Mouse.current.position.ReadValue();
 
@@ -175,7 +175,7 @@ public static class HelperUtilities
     // / <summary>
     // / Get the mouse position in UI space.
     // / </summary>
-    public static Vector3 GetMousePositionInUI(RectTransform rectTransform, Camera uiCamera = null)
+    public static Vector3 GetMousePositionInUI(RectTransform rectTransform, UnityEngine.Camera uiCamera = null)
     {
 
         Vector3 mouseScreenPosition = Mouse.current.position.ReadValue();

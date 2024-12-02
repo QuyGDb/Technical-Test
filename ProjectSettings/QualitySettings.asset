@@ -44,7 +44,7 @@ QualitySettings:
     asyncUploadBufferSize: 16
     asyncUploadPersistentBuffer: 1
     resolutionScalingFixedDPIFactor: 1
-    customRenderPipeline: {fileID: 11400000, guid: 534602a7d78a54440aebfdc1d1b4c54d,
+    customRenderPipeline: {fileID: 11400000, guid: c0442b483606a45468e28012c09a98f2,
       type: 2}
     terrainQualityOverrides: 0
     terrainPixelError: 1
@@ -57,4 +57,7 @@ QualitySettings:
     terrainMaxTrees: 50
     excludedTargetPlatforms: []
   m_TextureMipmapLimitGroupNames: []
-  m_PerPlatformDefaultQuality: {}
+  m_PerPlatformDefaultQuality:
+    Server: 0
+    Standalone: 0
+    WebGL: 0

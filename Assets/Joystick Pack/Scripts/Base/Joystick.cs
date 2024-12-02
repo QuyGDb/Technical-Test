@@ -36,7 +36,7 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     private RectTransform baseRect = null;
 
     private Canvas canvas;
-    private Camera cam;
+    private UnityEngine.Camera cam;
 
     private Vector2 input = Vector2.zero;
 
@@ -76,7 +76,7 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         handle.anchoredPosition = input * radius * handleRange;
     }
 
-    protected virtual void HandleInput(float magnitude, Vector2 normalised, Vector2 radius, Camera cam)
+    protected virtual void HandleInput(float magnitude, Vector2 normalised, Vector2 radius, UnityEngine.Camera cam)
     {
         if (magnitude > deadZone)
         {

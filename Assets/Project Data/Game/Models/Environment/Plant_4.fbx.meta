@@ -1,19 +1,19 @@
 fileFormatVersion: 2
 guid: ae2ac81c9d25cc04b8d243e5a4e7a393
 ModelImporter:
-  serializedVersion: 21300
+  serializedVersion: 22200
   internalIDToNameTable: []
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Environment
-    second: {fileID: 2100000, guid: 448106a5878541c48afee21139593c60, type: 2}
+    second: {fileID: 2100000, guid: 65e810efb8a9a3c4a9f5b8b55cb0544d, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: lambert1
-    second: {fileID: 2100000, guid: 448106a5878541c48afee21139593c60, type: 2}
+    second: {fileID: 2100000, guid: 65e810efb8a9a3c4a9f5b8b55cb0544d, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -50,6 +50,7 @@ ModelImporter:
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
+    importPhysicalCameras: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
@@ -77,6 +78,7 @@ ModelImporter:
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -109,6 +111,7 @@ ModelImporter:
   humanoidOversampling: 1
   avatarSetup: 0
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 0
   remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
