@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class InGameUI : MonoBehaviour
@@ -37,7 +38,8 @@ public class InGameUI : MonoBehaviour
         nextButton.onClick.RemoveAllListeners();
         nextButton.onClick.AddListener(() =>
         {
-            Debug.Log("Next Level");
+            GameManager.Instance.HandleGameState(GameState.Menu);
+            SceneManager.LoadScene(0);
         });
     }
     private void Update()

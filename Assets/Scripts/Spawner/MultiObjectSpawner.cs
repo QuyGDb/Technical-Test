@@ -8,7 +8,6 @@ public abstract class MultiObjectSpawner : MonoBehaviour
     protected float positionXboundLeft = -16.5f;
     protected float positionXboundRight = 3.5f;
     protected int positionZboundStart = 30;
-    protected int positionZboundEnd;
 
     protected virtual void OnEnable()
     {
@@ -30,12 +29,8 @@ public abstract class MultiObjectSpawner : MonoBehaviour
         //obstacle.gameObject.SetActive(true);
         StartCoroutine(RespawnCoroutine(spawnedObject));
     }
-    protected IEnumerator RespawnCoroutine(SpawnedObject spawnedObject)
-    {
-        spawnedObject.transform.position = new Vector3(Random.Range(positionXboundLeft, positionXboundRight), 0, Random.Range(positionZboundStart, positionZboundEnd));
-        yield return null;
-        spawnedObject.gameObject.SetActive(true);
-    }
+    protected abstract IEnumerator RespawnCoroutine(SpawnedObject spawnedObject);
+
 
     public abstract void SpawnObject(LevelDetails levelDetails);
 

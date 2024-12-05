@@ -8,11 +8,11 @@ public class ObstacleSpawner : MultiObjectSpawner
     [SerializeField] private GameObject[] obstaclePrefabs = new GameObject[9];
     private int baseObstacleType = 5;
     protected int nearEndRoadOffset = 35;
+    private int positionZboundEnd;
 
     /// <summary>
     /// Respawn the obstacle to a new random position
     /// </summary>
-
     public override void SpawnObject(LevelDetails levelDetails)
     {
         List<Vector3> randomSpawnPositionList = GetRandomSpawnPositionList(levelDetails);
@@ -54,5 +54,13 @@ public class ObstacleSpawner : MultiObjectSpawner
             controlledRandomObstacles.Add(randomPositon);
         }
         return controlledRandomObstacles;
+    }
+
+    protected override IEnumerator RespawnCoroutine(SpawnedObject spawnedObject)
+    {
+
+        yield return null;
+        spawnedObject.transform.position = new Vector3(Random.Range(positionXboundLeft, positionXboundRight), 0, Random.Range(positionZboundStart, positionZboundEnd));
+        spawnedObject.gameObject.SetActive(true);
     }
 }

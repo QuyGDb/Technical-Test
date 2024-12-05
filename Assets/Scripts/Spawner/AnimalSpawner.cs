@@ -8,6 +8,11 @@ public class AnimalSpawner : MultiObjectSpawner
     private int baseAnimalsType = 2;
     protected int nearEndRoadOffset = 10;
     [HideInInspector] public List<GameObject> spawnedAnimals = new List<GameObject>();
+    private int positionZboundEnd;
+    /// <summary>
+    /// Need first object start at around positionZboundStart, so offset = 1 to seaparate other objects
+    /// </summary>
+    private int offset = 1;
     public override void SpawnObject(LevelDetails levelDetails)
     {
         List<Vector3> randomSpawnPositionList = GetRandomSpawnPositionList(levelDetails);
@@ -36,7 +41,7 @@ public class AnimalSpawner : MultiObjectSpawner
     protected override List<Vector3> GetRandomSpawnPositionList(LevelDetails levelDetails)
     {
         positionZboundEnd = levelDetails.phaseOneRoadSegmentCount * Settings.roadSegmentLength - nearEndRoadOffset;
-        int distanceBetweenAnimal = (positionZboundEnd - positionZboundStart) / levelDetails.animalsQuantity;
+        int distanceBetweenAnimal = (positionZboundEnd - positionZboundStart) / (levelDetails.animalsQuantity - offset);
         List<Vector3> randomSpawnPositionList = new List<Vector3>();
         for (int i = 0; i < levelDetails.animalsQuantity; i++)
         {
@@ -44,5 +49,13 @@ public class AnimalSpawner : MultiObjectSpawner
             randomSpawnPositionList.Add(randomPosition);
         }
         return randomSpawnPositionList;
+    }
+
+    protected override IEnumerator RespawnCoroutine(SpawnedObject spawnedObject)
+    {
+
+        yield return null;
+        spawnedObject.transform.position = new Vector3(Random.Range(positionXboundLeft, positionXboundRight), 0, Random.Range(positionZboundStart, positionZboundEnd));
+        spawnedObject.gameObject.SetActive(true);
     }
 }

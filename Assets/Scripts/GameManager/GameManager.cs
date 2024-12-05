@@ -51,6 +51,12 @@ public class GameManager : SingletonMonobehaviour<GameManager>
                 secoundCamera.gameObject.SetActive(true);
                 break;
             case GameState.Win:
+                if (Settings.currentLevel == Settings.selectedLevel)
+                {
+                    Settings.currentLevel++;
+                    PlayerPrefs.SetInt("Level", Settings.currentLevel);
+                    PlayerPrefs.Save();
+                }
                 Time.timeScale = 1f;
                 break;
             case GameState.Lost:

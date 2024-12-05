@@ -14,7 +14,7 @@ public class Move : MonoBehaviour
         controller = GetComponent<CharacterController>();
         if (PlayerPrefs.HasKey("Speed"))
         {
-            speed = PlayerPrefs.GetFloat("Speed");
+            speed += PlayerPrefs.GetFloat("Speed");
         }
     }
 
@@ -74,4 +74,5 @@ public class Move : MonoBehaviour
 
         }
     }
+
 }

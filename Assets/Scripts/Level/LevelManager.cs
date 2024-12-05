@@ -15,7 +15,7 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
 
-        GenarateLevel(1);
+        GenarateLevel(Settings.selectedLevel);
         GameManager.Instance.HandleGameState(GameState.Start);
         StartCoroutine(ChangeState());
 
@@ -75,17 +75,11 @@ public class LevelManager : MonoBehaviour
         {
             return baseLevel.obstaclesQuantity;
         }
-        if (level % levelConfig.levelMultiplierLineOneInterval == 0 && level >= 1)
+        else
         {
             int multiplier = level / levelConfig.levelMultiplierLineOneInterval;
             return baseLevel.obstaclesQuantity + levelConfig.obstacleLevelMultiplier * level + baseObstacleInOneSegment * multiplier;
         }
-        if (level >= 1)
-        {
-            return baseLevel.obstaclesQuantity + levelConfig.obstacleLevelMultiplier * level;
-        }
-        return 0;
-
     }
 
     private int CalculateAnimalsForLevel(int level)
@@ -129,24 +123,16 @@ public class LevelManager : MonoBehaviour
 
     private int CalculatePhaseOneRoadSegmentsCountForLevel(int level)
     {
-        if (level % levelConfig.levelMultiplierLineOneInterval == 0 && level >= 1)
-        {
-            int multiplier = level / levelConfig.levelMultiplierLineOneInterval;
-            int baseSegmentCount = (int)baseLevel.phaseOneLength / Settings.roadSegmentLength;
-            return baseSegmentCount + multiplier;
-        }
-        return (int)baseLevel.phaseOneLength / Settings.roadSegmentLength;
+        int multiplier = level / levelConfig.levelMultiplierLineOneInterval;
+        int baseSegmentCount = (int)baseLevel.phaseOneLength / Settings.roadSegmentLength;
+        return baseSegmentCount + multiplier;
     }
 
     private int CalculatePhaseTwoRoadSegmentsCountForLevel(int level)
     {
-        if (level % levelConfig.levelMultiplierLineTwoInterval == 0 && level >= 1)
-        {
-            int multiplier = level / levelConfig.levelMultiplierLineTwoInterval;
-            int baseSegmentCount = (int)baseLevel.phaseTwoLength / Settings.roadSegmentLength;
-            return baseSegmentCount + multiplier;
-        }
-        return (int)baseLevel.phaseTwoLength / Settings.roadSegmentLength;
+        int multiplier = level / levelConfig.levelMultiplierLineTwoInterval;
+        int baseSegmentCount = (int)baseLevel.phaseTwoLength / Settings.roadSegmentLength;
+        return baseSegmentCount + multiplier;
     }
 
 

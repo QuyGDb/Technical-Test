@@ -1,5 +1,6 @@
 public enum GameState
 {
+    Menu,
     Start,
     LineOne,
     LineTwo,
