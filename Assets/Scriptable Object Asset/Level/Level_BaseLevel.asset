@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b30c0237b6dcd1e439a507e0e919c1f1, type: 3}
   m_Name: Level_BaseLevel
   m_EditorClassIdentifier: 
-  phaseOneLength: 200
-  phaseTwoLength: 200
+  phaseOneLength: 400
+  phaseTwoLength: 400
   obstaclesQuantity: 18
   animalsQuantity: 5
   tsunamiVelocityPhaseOne: 10
-  tsunamiVelocityPhaseTwo: 40
+  tsunamiVelocityPhaseTwo: 20

@@ -19,13 +19,37 @@ public class AnimatePlayer : MonoBehaviour
     {
         idleEvent.OnIdle += Idle_OnIdle;
         moveEvent.OnMove += Move_OnMove;
+        GameManager.Instance.OnGameStateChange += OnGameStateChange_AnimatePlayer;
+
     }
     private void OnDisable()
     {
         idleEvent.OnIdle -= Idle_OnIdle;
         moveEvent.OnMove -= Move_OnMove;
+        GameManager.Instance.OnGameStateChange += OnGameStateChange_AnimatePlayer;
+
     }
 
+    private void OnGameStateChange_AnimatePlayer(GameState gameState)
+    {
+        if (gameState == GameState.LineTwo)
+        {
+            idleEvent.OnIdle -= Idle_OnIdle;
+            moveEvent.OnMove -= Move_OnMove;
+        }
+        if (gameState == GameState.Lost || gameState == GameState.Win)
+        {
+            animator.SetBool(Settings.Run, false);
+        }
+    }
+    private void Update()
+    {
+        if (GameManager.Instance.gameState == GameState.LineTwo)
+        {
+            animator.SetBool(Settings.Run, true);
+            animator.SetFloat(Settings.MovementMultiplier, 1);
+        }
+    }
     private void Idle_OnIdle()
     {
         animator.SetBool(Settings.Run, false);

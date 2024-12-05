@@ -6,19 +6,61 @@ public class LevelManager : MonoBehaviour
 {
 
     [SerializeField] private BaseLevelSO baseLevel;
-    
+    [SerializeField] private LevelConfigSO levelConfig;
+    [SerializeField] private RoadSpawner roadSpawner;
+    [SerializeField] private ObstacleSpawner obstacleSpawner;
+    [SerializeField] private AnimalSpawner animalSpawner;
+    [SerializeField] private FinishUISpawner finishUISpawner;
 
-
-    private void GenarateLevel(int level)
+    private void Start()
     {
 
+        GenarateLevel(1);
+        GameManager.Instance.HandleGameState(GameState.Start);
+        StartCoroutine(ChangeState());
 
     }
-    private LevelDetails CaluculateLevelDetails(int level)
+
+    public IEnumerator ChangeState()
+    {
+        yield return new WaitForSeconds(3);
+        GameManager.Instance.HandleGameState(GameState.LineOne);
+    }
+    private void OnEnable()
+    {
+        GameManager.Instance.OnGameStateChange += OnGameStateChange_LevelManager;
+    }
+    private void OnDisable()
+    {
+        GameManager.Instance.OnGameStateChange -= OnGameStateChange_LevelManager;
+    }
+
+    private void OnGameStateChange_LevelManager(GameState gameState)
+    {
+        if (gameState == GameState.LineTwo)
+        {
+            obstacleSpawner.gameObject.SetActive(false);
+        }
+    }
+    private void GenarateLevel(int level)
+    {
+        LevelDetails levelDetails = CalculateLevelDetails(level);
+        GameManager.Instance.currentLevel = levelDetails;
+        roadSpawner.SpawnPhaseOneRoad(levelDetails.phaseOneRoadSegmentCount);
+        roadSpawner.SpawnPhaseTwoRoad(levelDetails.phaseTwoRoadSegmentCount);
+        obstacleSpawner.SpawnObject(levelDetails);
+        animalSpawner.SpawnObject(levelDetails);
+        finishUISpawner.SpawnFinishUI(levelDetails);
+
+    }
+    private LevelDetails CalculateLevelDetails(int level)
     {
         LevelDetails levelDetails;
-        levelDetails.phaseOneLength = CalculatePhaseOneLengthForLevel(level);
-        levelDetails.phaseTwoLength = CalculatePhaseTwoLengthForLevel(level);
+        levelDetails.level = level;
+        levelDetails.phaseOneRoadSegmentCount = CalculatePhaseOneRoadSegmentsCountForLevel(level);
+        levelDetails.phaseOneLength = levelDetails.phaseOneRoadSegmentCount * Settings.roadSegmentLength;
+        levelDetails.phaseTwoRoadSegmentCount = CalculatePhaseTwoRoadSegmentsCountForLevel(level);
+        levelDetails.phaseTwoLength = levelDetails.phaseTwoRoadSegmentCount * Settings.roadSegmentLength;
         levelDetails.obstaclesQuantity = CalculateObstacesForLevel(level);
         levelDetails.animalsQuantity = CalculateAnimalsForLevel(level);
         levelDetails.tsunamiVelocityPhaseOne = CalculatePhaseOneTsunamiVelocityForLevel(level);
@@ -28,18 +70,19 @@ public class LevelManager : MonoBehaviour
 
     private int CalculateObstacesForLevel(int level)
     {
+        int baseObstacleInOneSegment = baseLevel.obstaclesQuantity / 2;
         if (level == 0)
         {
             return baseLevel.obstaclesQuantity;
         }
-        if (level % 5 == 0 && level >= 1)
+        if (level % levelConfig.levelMultiplierLineOneInterval == 0 && level >= 1)
         {
-            int multiplier = level / 5;
-            return baseLevel.obstaclesQuantity + 2 * level + 10 * multiplier;
+            int multiplier = level / levelConfig.levelMultiplierLineOneInterval;
+            return baseLevel.obstaclesQuantity + levelConfig.obstacleLevelMultiplier * level + baseObstacleInOneSegment * multiplier;
         }
         if (level >= 1)
         {
-            return baseLevel.obstaclesQuantity + 2 * level;
+            return baseLevel.obstaclesQuantity + levelConfig.obstacleLevelMultiplier * level;
         }
         return 0;
 
@@ -53,7 +96,7 @@ public class LevelManager : MonoBehaviour
         }
         if (level >= 1)
         {
-            return baseLevel.animalsQuantity + 1 * level;
+            return baseLevel.animalsQuantity + levelConfig.animalLevelMultiplier * level;
         }
         return 0;
     }
@@ -67,7 +110,7 @@ public class LevelManager : MonoBehaviour
 
         if (level >= 1)
         {
-            return baseLevel.tsunamiVelocityPhaseOne + 2 * level;
+            return baseLevel.tsunamiVelocityPhaseOne + levelConfig.tsunamiVelocityLineOneMultiplier * level;
         }
         return 0;
     }
@@ -79,29 +122,31 @@ public class LevelManager : MonoBehaviour
         }
         if (level >= 1)
         {
-            return baseLevel.tsunamiVelocityPhaseTwo + 2 * level;
+            return baseLevel.tsunamiVelocityPhaseTwo + levelConfig.tsunamiVelocityLineTwoMultiplier * level;
         }
         return 0;
     }
 
-    private float CalculatePhaseOneLengthForLevel(int level)
+    private int CalculatePhaseOneRoadSegmentsCountForLevel(int level)
     {
-        if (level % 5 == 0 && level >= 1)
+        if (level % levelConfig.levelMultiplierLineOneInterval == 0 && level >= 1)
         {
-            int multiplier = level / 5;
-            return baseLevel.phaseOneLength + 100 * multiplier;
+            int multiplier = level / levelConfig.levelMultiplierLineOneInterval;
+            int baseSegmentCount = (int)baseLevel.phaseOneLength / Settings.roadSegmentLength;
+            return baseSegmentCount + multiplier;
         }
-        return baseLevel.phaseOneLength;
+        return (int)baseLevel.phaseOneLength / Settings.roadSegmentLength;
     }
 
-    private float CalculatePhaseTwoLengthForLevel(int level)
+    private int CalculatePhaseTwoRoadSegmentsCountForLevel(int level)
     {
-        if (level % 5 == 0 && level >= 1)
+        if (level % levelConfig.levelMultiplierLineTwoInterval == 0 && level >= 1)
         {
-            int multiplier = level / 5;
-            return baseLevel.phaseTwoLength + 100 * multiplier;
+            int multiplier = level / levelConfig.levelMultiplierLineTwoInterval;
+            int baseSegmentCount = (int)baseLevel.phaseTwoLength / Settings.roadSegmentLength;
+            return baseSegmentCount + multiplier;
         }
-        return baseLevel.phaseTwoLength;
+        return (int)baseLevel.phaseTwoLength / Settings.roadSegmentLength;
     }
 
 

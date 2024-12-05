@@ -5,10 +5,30 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
 {
-    [SerializeField] private FloatingJoystick joystick;
+    public FloatingJoystick joystick;
     private IdleEvent idleEvent;
     private MoveEvent moveEvent;
 
+    private void OnEnable()
+    {
+        GameManager.Instance.OnGameStateChange += OnGameStateChange_PlayerControl;
+    }
+    private void OnDisable()
+    {
+        GameManager.Instance.OnGameStateChange -= OnGameStateChange_PlayerControl;
+    }
+
+    private void OnGameStateChange_PlayerControl(GameState gameState)
+    {
+        if (gameState == GameState.LineTwo)
+        {
+            joystick.gameObject.SetActive(false);
+        }
+        if (gameState == GameState.Win || gameState == GameState.Lost)
+        {
+            joystick.gameObject.SetActive(false);
+        }
+    }
     private void Awake()
     {
         idleEvent = GetComponent<IdleEvent>();
@@ -16,7 +36,7 @@ public class PlayerControl : MonoBehaviour
     }
     private void Update()
     {
-        if (joystick.Direction == Vector2.zero)
+        if (joystick.Direction == Vector2.zero && joystick.gameObject.activeSelf == true)
         {
             idleEvent.CallIdleEvent();
         }

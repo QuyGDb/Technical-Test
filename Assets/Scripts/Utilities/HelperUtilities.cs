@@ -204,4 +204,5 @@ public static class HelperUtilities
         // formula to convert from the linear scale to the logarithmic decibel scale
         return Mathf.Log10((float)linear / linearScaleRange) * 20f;
     }
+
 }

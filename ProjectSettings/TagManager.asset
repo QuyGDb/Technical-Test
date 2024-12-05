@@ -6,17 +6,19 @@ TagManager:
   tags:
   - Nurse
   - Visitor
+  - Obstacle
+  - Tsunami
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Obstacles
   - Water
   - UI
-  - Land
-  - Interactable
   - 
-  - 
+  - PickUp
+  - Player
+  - Animal
   - 
   - 
   - 
