@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86c90953c6f4c894b90fc0d233fd986b, type: 3}
   m_Name: LevelConfig
   m_EditorClassIdentifier: 
-  tsunamiVelocityLineOneMultiplier: 2
-  tsunamiVelocityLineTwoMultiplier: 2
+  tsunamiVelocityLineOneMultiplier: 5
+  tsunamiVelocityLineTwoMultiplier: 5
   levelMultiplierLineOneInterval: 2
   levelMultiplierLineTwoInterval: 2
-  obstacleLevelMultiplier: 2
+  obstacleLevelMultiplier: 6
   animalLevelMultiplier: 1

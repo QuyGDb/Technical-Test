@@ -18,13 +18,19 @@ public class LevelPanelManager : MonoBehaviour
     private int levelPanelCount;
     private void Awake()
     {
+        InitializeButton();
+    }
+    private void OnEnable()
+    {
         if (PlayerPrefs.HasKey("Level"))
             Settings.currentLevel = PlayerPrefs.GetInt("Level");
         else
             Settings.currentLevel = 0;
-
-        InitializeButton();
-
+        Debug.Log("Current Level: " + Settings.currentLevel);
+        CalculatelevelPanelCount();
+        CalculatePanelIndex();
+        CalculateLevelQuantityInLevelButton(currentPanelIndex);
+        ProcessLevelEvent(CalculatelevelPanelCount());
     }
 
     private void InitializeButton()
@@ -41,14 +47,12 @@ public class LevelPanelManager : MonoBehaviour
     {
         NextLevels.onClick.AddListener(NextLevelsOnClick);
         PreviousLevels.onClick.AddListener(PreviousLevelsOnClick);
-        CalculatelevelPanelCount();
-        CalculatePanelIndex();
-        CalculateLevelQuantityInLevelButton(currentPanelIndex);
-        ProcessLevelEvent(CalculatelevelPanelCount());
     }
     private int CalculatelevelPanelCount()
     {
         float fractionalPart = (Settings.currentLevel / (float)levelCount) - Settings.currentLevel / levelCount;
+        if (fractionalPart == 0)
+            return 12;
         float currentLevelIndexFloat = fractionalPart * levelCount;
         return Mathf.RoundToInt(currentLevelIndexFloat);
     }
@@ -67,7 +71,7 @@ public class LevelPanelManager : MonoBehaviour
 
     private void ProcessLevelEvent(int currentLevelIndex)
     {
-
+        Debug.Log("Current Level Index: " + currentLevelIndex);
         for (int i = 0; i < levelCount; i++)
         {
             if (i < currentLevelIndex)

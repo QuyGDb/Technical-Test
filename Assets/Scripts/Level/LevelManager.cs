@@ -14,18 +14,10 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-
         GenarateLevel(Settings.selectedLevel);
         GameManager.Instance.HandleGameState(GameState.Start);
-        StartCoroutine(ChangeState());
-
     }
 
-    public IEnumerator ChangeState()
-    {
-        yield return new WaitForSeconds(3);
-        GameManager.Instance.HandleGameState(GameState.LineOne);
-    }
     private void OnEnable()
     {
         GameManager.Instance.OnGameStateChange += OnGameStateChange_LevelManager;

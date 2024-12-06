@@ -20,6 +20,14 @@ public class PlayerControl : MonoBehaviour
 
     private void OnGameStateChange_PlayerControl(GameState gameState)
     {
+        if (gameState == GameState.Start)
+        {
+            joystick.gameObject.SetActive(false);
+        }
+        if (gameState == GameState.LineOne)
+        {
+            joystick.gameObject.SetActive(true);
+        }
         if (gameState == GameState.LineTwo)
         {
             joystick.gameObject.SetActive(false);

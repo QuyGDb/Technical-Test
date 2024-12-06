@@ -38,8 +38,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         switch (gameState)
         {
             case GameState.Start:
-                startCamera.gameObject.SetActive(true);
-                MainCamera.gameObject.SetActive(false);
+                StartCoroutine(TransitionMainVcamToStartVcam());
                 break;
             case GameState.LineOne:
                 timer = 0f;
@@ -64,6 +63,18 @@ public class GameManager : SingletonMonobehaviour<GameManager>
                 break;
         }
         OnGameStateChange?.Invoke(gameState);
+    }
+
+    private IEnumerator TransitionMainVcamToStartVcam()
+    {
+        yield return new WaitForSeconds(1f);
+        startCamera.gameObject.SetActive(true);
+        MainCamera.gameObject.SetActive(false);
+        yield return new WaitForSeconds(3f);
+        startCamera.gameObject.SetActive(false);
+        MainCamera.gameObject.SetActive(true);
+        HandleGameState(GameState.LineOne);
+
     }
     private void Update()
     {
