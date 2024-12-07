@@ -64,61 +64,45 @@ public class LevelManager : MonoBehaviour
     {
         int baseObstacleInOneSegment = baseLevel.obstaclesQuantity / 2;
         if (level == 0)
-        {
             return baseLevel.obstaclesQuantity;
-        }
         else
         {
             int multiplier = level / levelConfig.levelMultiplierLineOneInterval;
             return baseLevel.obstaclesQuantity + levelConfig.obstacleLevelMultiplier * level + baseObstacleInOneSegment * multiplier;
         }
     }
-
-    private int CalculateAnimalsForLevel(int level)
-    {
-        if (level == 0)
-        {
-            return baseLevel.animalsQuantity;
-        }
-        if (level >= 1)
-        {
-            return baseLevel.animalsQuantity + levelConfig.animalLevelMultiplier * level;
-        }
-        return 0;
-    }
-
-    private float CalculatePhaseOneTsunamiVelocityForLevel(int level)
-    {
-        if (level == 0)
-        {
-            return baseLevel.tsunamiVelocityPhaseOne;
-        }
-
-        if (level >= 1)
-        {
-            return baseLevel.tsunamiVelocityPhaseOne + levelConfig.tsunamiVelocityLineOneMultiplier * level;
-        }
-        return 0;
-    }
-    private float CalculatePhaseTwoTsunamiVelocityForLevel(int level)
-    {
-        if (level == 0)
-        {
-            return baseLevel.tsunamiVelocityPhaseTwo;
-        }
-        if (level >= 1)
-        {
-            return baseLevel.tsunamiVelocityPhaseTwo + levelConfig.tsunamiVelocityLineTwoMultiplier * level;
-        }
-        return 0;
-    }
-
     private int CalculatePhaseOneRoadSegmentsCountForLevel(int level)
     {
         int multiplier = level / levelConfig.levelMultiplierLineOneInterval;
         int baseSegmentCount = (int)baseLevel.phaseOneLength / Settings.roadSegmentLength;
         return baseSegmentCount + multiplier;
     }
+    private int CalculateAnimalsForLevel(int level)
+    {
+        if (level == 0)
+            return baseLevel.animalsQuantity;
+        if (level >= 1)
+            return baseLevel.animalsQuantity + levelConfig.animalLevelMultiplier * level;
+        return 0;
+    }
+    private float CalculatePhaseOneTsunamiVelocityForLevel(int level)
+    {
+        if (level == 0)
+            return baseLevel.tsunamiVelocityPhaseOne;
+        if (level >= 1)
+            return baseLevel.tsunamiVelocityPhaseOne + levelConfig.tsunamiVelocityLineOneMultiplier * level;
+        return 0;
+    }
+    private float CalculatePhaseTwoTsunamiVelocityForLevel(int level)
+    {
+        if (level == 0)
+            return baseLevel.tsunamiVelocityPhaseTwo;
+        if (level >= 1)
+            return baseLevel.tsunamiVelocityPhaseTwo + levelConfig.tsunamiVelocityLineTwoMultiplier * level;
+        return 0;
+    }
+
+
 
     private int CalculatePhaseTwoRoadSegmentsCountForLevel(int level)
     {

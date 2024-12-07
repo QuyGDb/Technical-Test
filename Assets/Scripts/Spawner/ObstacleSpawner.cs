@@ -9,6 +9,7 @@ public class ObstacleSpawner : MultiObjectSpawner
     private int baseObstacleType = 5;
     protected int nearEndRoadOffset = 35;
     private int positionZboundEnd;
+    private WaitForSeconds respawnTime = new WaitForSeconds(0.5f);
 
     /// <summary>
     /// Respawn the obstacle to a new random position
@@ -45,12 +46,14 @@ public class ObstacleSpawner : MultiObjectSpawner
 
         for (int i = 0; i < controlledObstacleCount; i++)
         {
-            Vector3 controlledPositon = new Vector3(Random.Range(positionXboundLeft, positionXboundRight), 0, positionZboundStart + distanceBetweenObstacles * i + Random.Range(-2, 2));
+            Vector3 controlledPositon = new Vector3(Random.Range(positionXboundLeft, positionXboundRight),
+                0, positionZboundStart + distanceBetweenObstacles * i + Random.Range(-2, 2));
             controlledRandomObstacles.Add(controlledPositon);
         }
         for (int i = controlledObstacleCount; i < levelDetails.obstaclesQuantity; i++)
         {
-            Vector3 randomPositon = new Vector3(Random.Range(positionXboundLeft, positionXboundRight), 0, Random.Range(positionZboundStart, positionZboundEnd));
+            Vector3 randomPositon = new Vector3(Random.Range(positionXboundLeft, positionXboundRight),
+                0, Random.Range(positionZboundStart, positionZboundEnd));
             controlledRandomObstacles.Add(randomPositon);
         }
         return controlledRandomObstacles;
@@ -58,8 +61,8 @@ public class ObstacleSpawner : MultiObjectSpawner
 
     protected override IEnumerator RespawnCoroutine(SpawnedObject spawnedObject)
     {
-
-        yield return null;
+        spawnedObject.gameObject.SetActive(false);
+        yield return respawnTime;
         spawnedObject.transform.position = new Vector3(Random.Range(positionXboundLeft, positionXboundRight), 0, Random.Range(positionZboundStart, positionZboundEnd));
         spawnedObject.gameObject.SetActive(true);
     }

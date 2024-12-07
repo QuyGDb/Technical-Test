@@ -19,7 +19,6 @@ public class AnimalSpawner : MultiObjectSpawner
         for (int i = 0; i < levelDetails.animalsQuantity; i++)
         {
             GameObject randomObstacle = animalPrefab[Random.Range(0, CalculateObjectTypeAppear(levelDetails.level))];
-
             Vector3 eulerAngles = new Vector3(0, Random.Range(0, 360), 0);
             Quaternion rotation = Quaternion.Euler(eulerAngles);
             GameObject spawnedAnimal = Instantiate(randomObstacle, randomSpawnPositionList[i], rotation, transform);
@@ -45,7 +44,8 @@ public class AnimalSpawner : MultiObjectSpawner
         List<Vector3> randomSpawnPositionList = new List<Vector3>();
         for (int i = 0; i < levelDetails.animalsQuantity; i++)
         {
-            Vector3 randomPosition = new Vector3(Random.Range(positionXboundLeft, positionXboundRight), 0, positionZboundStart + distanceBetweenAnimal * i + Random.Range(-5, 5));
+            Vector3 randomPosition = new Vector3(Random.Range(positionXboundLeft, positionXboundRight),
+                0, positionZboundStart + distanceBetweenAnimal * i + Random.Range(-5, 5));
             randomSpawnPositionList.Add(randomPosition);
         }
         return randomSpawnPositionList;

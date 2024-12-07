@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Obstacle : SpawnedObject
@@ -19,9 +20,9 @@ public class Obstacle : SpawnedObject
             if ((layerMask.value & 1 << hitCollider.gameObject.layer) > 0 && hitCollider.gameObject != gameObject)
             {
                 StaticEventHandler.CallObjectOverlappedEvent(this);
-                gameObject.SetActive(false);
 
             }
         }
     }
+
 }
