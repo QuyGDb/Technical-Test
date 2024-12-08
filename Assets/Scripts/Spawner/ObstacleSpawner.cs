@@ -13,7 +13,7 @@ public class ObstacleSpawner : MultiObjectSpawner
 
     /// <summary>
     /// Respawn the obstacle to a new random position
-    /// </summary>
+    /// </summary
     public override void SpawnObject(LevelDetails levelDetails)
     {
         List<Vector3> randomSpawnPositionList = GetRandomSpawnPositionList(levelDetails);
@@ -23,6 +23,7 @@ public class ObstacleSpawner : MultiObjectSpawner
             Vector3 eulerAngles = new Vector3(0, Random.Range(0, 360), 0);
             Quaternion rotation = Quaternion.Euler(eulerAngles);
             Instantiate(randomObstacle, randomSpawnPositionList[i], rotation, transform);
+            Debug.Log("Obstacle spawned" + Time.frameCount);
         }
     }
     protected override int CalculateObjectTypeAppear(int level)
@@ -62,8 +63,11 @@ public class ObstacleSpawner : MultiObjectSpawner
     protected override IEnumerator RespawnCoroutine(SpawnedObject spawnedObject)
     {
         spawnedObject.gameObject.SetActive(false);
+        Debug.Log("respawn: " + Time.frameCount + spawnedObject.name + " " + ((Obstacle)spawnedObject).count);
         yield return respawnTime;
         spawnedObject.transform.position = new Vector3(Random.Range(positionXboundLeft, positionXboundRight), 0, Random.Range(positionZboundStart, positionZboundEnd));
+        Debug.Log("Obstacle respawned 1: " + Time.frameCount + " " + spawnedObject.name);
+
         spawnedObject.gameObject.SetActive(true);
     }
 

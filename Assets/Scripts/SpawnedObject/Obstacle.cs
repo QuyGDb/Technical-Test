@@ -4,11 +4,17 @@ using UnityEngine;
 public class Obstacle : SpawnedObject
 {
     private int sizeLength = 4;
+    public int count = 0;
     protected override void Awake()
     {
         base.Awake();
     }
 
+    protected override void OnEnable()
+    {
+        count++;
+        base.OnEnable();
+    }
 
     protected override void ProcessOverlapping()
     {
