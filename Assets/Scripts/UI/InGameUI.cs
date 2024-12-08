@@ -69,4 +69,18 @@ public class InGameUI : MonoBehaviour
         if (GameManager.Instance.tsunamiTransform.position.z > 0)
             tsunamiBar.value = GameManager.Instance.tsunamiTransform.position.z / (GameManager.Instance.currentLevel.phaseOneLength + GameManager.Instance.currentLevel.phaseTwoLength);
     }
+
+    #region Validation
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        HelperUtilities.ValidateCheckNullValue(this, nameof(result), result);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(pickedUpAnimalCount), pickedUpAnimalCount);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(timer), timer);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(nextButton), nextButton);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(playerBar), playerBar);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(tsunamiBar), tsunamiBar);
+    }
+#endif
+    #endregion
 }

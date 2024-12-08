@@ -66,4 +66,14 @@ public class ObstacleSpawner : MultiObjectSpawner
         spawnedObject.transform.position = new Vector3(Random.Range(positionXboundLeft, positionXboundRight), 0, Random.Range(positionZboundStart, positionZboundEnd));
         spawnedObject.gameObject.SetActive(true);
     }
+
+
+    #region Validation
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        HelperUtilities.ValidateCheckEnumerableValues(this, nameof(obstaclePrefabs), obstaclePrefabs);
+    }
+#endif
+    #endregion
 }

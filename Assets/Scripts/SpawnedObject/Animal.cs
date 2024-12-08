@@ -11,7 +11,7 @@ public class Animal : SpawnedObject
     [HideInInspector] public int animalID;
     private LayerMask pickUpLayer;
     private Animator animator;
-    [SerializeField] public bool isFollowingPlayer = false;
+    [HideInInspector] public bool isFollowingPlayer = false;
     [SerializeField] private Slider slider;
     [SerializeField] private Image notice;
     [SerializeField] private AnimalType animalType;
@@ -141,4 +141,15 @@ public class Animal : SpawnedObject
         Quaternion rotation = Quaternion.Euler(0, 0, 0);
         gameObject.transform.localRotation = rotation;
     }
+
+    #region Validation
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        HelperUtilities.ValidateCheckNullValue(this, nameof(slider), slider);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(notice), notice);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(catIconPrefabs), catIconPrefabs);
+    }
+#endif
+    #endregion
 }
