@@ -10,4 +10,13 @@ public class Water : MonoBehaviour
     {
         transform.position = new Vector3(player.position.x, -3, player.position.z);
     }
+
+    #region Validation
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        HelperUtilities.ValidateCheckNullValue(this, nameof(player), player);
+    }
+#endif
+    #endregion
 }

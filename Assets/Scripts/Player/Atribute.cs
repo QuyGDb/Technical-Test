@@ -136,5 +136,21 @@ public class Atribute : MonoBehaviour
         }
     }
 
-
+    #region Validation
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        HelperUtilities.ValidateCheckNullValue(this, nameof(staminaButton), staminaButton);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(speedButton), speedButton);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(incomeButton), incomeButton);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(staminaQuantity), staminaQuantity);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(speedQuantity), speedQuantity);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(incomeQuantity), incomeQuantity);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(staminaPriceTxt), staminaPriceTxt);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(speedPriceTxt), speedPriceTxt);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(incomePriceTxt), incomePriceTxt);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(moneyQuantity), moneyQuantity);
+    }
+#endif
+    #endregion
 }

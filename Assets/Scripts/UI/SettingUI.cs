@@ -32,4 +32,13 @@ public class SettingUI : MonoBehaviour
         tmpInputField.text = "";
         tmpInputField.gameObject.SetActive(false);
     }
+
+    #region Validation
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        HelperUtilities.ValidateCheckNullValue(this, nameof(tmpInputField), tmpInputField);
+    }
+#endif
+    #endregion
 }

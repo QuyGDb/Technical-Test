@@ -119,4 +119,16 @@ public class LevelPanelManager : MonoBehaviour
             CalculateLevelQuantityInLevelButton(currentPanelIndex);
         }
     }
+
+    #region Validation
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        HelperUtilities.ValidateCheckNullValue(this, nameof(levelBtnPrefab), levelBtnPrefab);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(levelContainer), levelContainer);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(NextLevels), NextLevels);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(PreviousLevels), PreviousLevels);
+    }
+#endif
+    #endregion
 }

@@ -73,4 +73,14 @@ public class DirectionArrow : MonoBehaviour
         }
         return nearAnimal;
     }
+
+    #region Validation
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        HelperUtilities.ValidateCheckNullValue(this, nameof(animalSpawner), animalSpawner);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(player), player);
+    }
+#endif
+    #endregion
 }

@@ -67,7 +67,18 @@ public class MenuUI : MonoBehaviour
         }
     }
 
-
+    #region Validation
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        HelperUtilities.ValidateCheckNullValue(this, nameof(levelPanel), levelPanel);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(playButton), playButton);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(closeLevelPanel), closeLevelPanel);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(Setting), Setting);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(SettingPanel), SettingPanel);
+    }
+#endif
+    #endregion
 
 
 }

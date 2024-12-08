@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AnimalSpawner : MultiObjectSpawner
 {
-    public GameObject[] animalPrefab = new GameObject[5];
+    public GameObject[] animalPrefabs = new GameObject[5];
     private int baseAnimalsType = 2;
     protected int nearEndRoadOffset = 10;
     [HideInInspector] public List<GameObject> spawnedAnimals = new List<GameObject>();
@@ -18,7 +18,7 @@ public class AnimalSpawner : MultiObjectSpawner
         List<Vector3> randomSpawnPositionList = GetRandomSpawnPositionList(levelDetails);
         for (int i = 0; i < levelDetails.animalsQuantity; i++)
         {
-            GameObject randomObstacle = animalPrefab[Random.Range(0, CalculateObjectTypeAppear(levelDetails.level))];
+            GameObject randomObstacle = animalPrefabs[Random.Range(0, CalculateObjectTypeAppear(levelDetails.level))];
             Vector3 eulerAngles = new Vector3(0, Random.Range(0, 360), 0);
             Quaternion rotation = Quaternion.Euler(eulerAngles);
             GameObject spawnedAnimal = Instantiate(randomObstacle, randomSpawnPositionList[i], rotation, transform);
@@ -58,4 +58,13 @@ public class AnimalSpawner : MultiObjectSpawner
         spawnedObject.transform.position = new Vector3(Random.Range(positionXboundLeft, positionXboundRight), 0, Random.Range(positionZboundStart, positionZboundEnd));
         spawnedObject.gameObject.SetActive(true);
     }
+
+    #region Validation
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        HelperUtilities.ValidateCheckEnumerableValues(this, nameof(animalPrefabs), animalPrefabs);
+    }
+#endif
+    #endregion
 }
