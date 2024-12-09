@@ -65,7 +65,7 @@ public class Animal : SpawnedObject
         {
             if ((layerMask.value & 1 << hitCollider.gameObject.layer) > 0 && hitCollider.gameObject != gameObject)
             {
-                StaticEventHandler.CallObjectOverlappedEvent(this);
+                StaticEventHandler.CallAnimalOverlappedEvent(this);
                 gameObject.SetActive(false);
 
             }

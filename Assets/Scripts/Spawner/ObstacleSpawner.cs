@@ -9,11 +9,26 @@ public class ObstacleSpawner : MultiObjectSpawner
     private int baseObstacleType = 5;
     protected int nearEndRoadOffset = 35;
     private int positionZboundEnd;
-    private WaitForSeconds respawnTime = new WaitForSeconds(0.5f);
+    private WaitForSeconds respawnTime = new WaitForSeconds(2f);
 
     /// <summary>
     /// Respawn the obstacle to a new random position
     /// </summary
+
+    private void Awake()
+    {
+        StaticEventHandler.OnObstacleOverlap += OnObstacleOverlapped;
+    }
+
+    private void OnDestroy()
+    {
+        StaticEventHandler.OnObstacleOverlap -= OnObstacleOverlapped;
+    }
+
+    private void OnObstacleOverlapped(SpawnedObject spawned)
+    {
+        Respawn(spawned);
+    }
     public override void SpawnObject(LevelDetails levelDetails)
     {
         List<Vector3> randomSpawnPositionList = GetRandomSpawnPositionList(levelDetails);
@@ -23,7 +38,6 @@ public class ObstacleSpawner : MultiObjectSpawner
             Vector3 eulerAngles = new Vector3(0, Random.Range(0, 360), 0);
             Quaternion rotation = Quaternion.Euler(eulerAngles);
             Instantiate(randomObstacle, randomSpawnPositionList[i], rotation, transform);
-            Debug.Log("Obstacle spawned" + Time.frameCount);
         }
     }
     protected override int CalculateObjectTypeAppear(int level)
@@ -40,7 +54,8 @@ public class ObstacleSpawner : MultiObjectSpawner
     protected override List<Vector3> GetRandomSpawnPositionList(LevelDetails levelDetails)
     {
 
-        positionZboundEnd = levelDetails.phaseOneRoadSegmentCount * Settings.roadSegmentLength - nearEndRoadOffset;
+        //  positionZboundEnd = levelDetails.phaseOneRoadSegmentCount * Settings.roadSegmentLength - nearEndRoadOffset;
+        positionZboundEnd = 50;
         int controlledObstacleCount = levelDetails.obstaclesQuantity / 2;
         float distanceBetweenObstacles = (positionZboundEnd - positionZboundStart) / controlledObstacleCount;
         List<Vector3> controlledRandomObstacles = new List<Vector3>();
@@ -63,10 +78,10 @@ public class ObstacleSpawner : MultiObjectSpawner
     protected override IEnumerator RespawnCoroutine(SpawnedObject spawnedObject)
     {
         spawnedObject.gameObject.SetActive(false);
-        Debug.Log("respawn: " + Time.frameCount + spawnedObject.name + " " + ((Obstacle)spawnedObject).count);
+        Debug.Log("respawn frame : " + Time.frameCount + spawnedObject.name + " ");
         yield return respawnTime;
         spawnedObject.transform.position = new Vector3(Random.Range(positionXboundLeft, positionXboundRight), 0, Random.Range(positionZboundStart, positionZboundEnd));
-        Debug.Log("Obstacle respawned 1: " + Time.frameCount + " " + spawnedObject.name);
+        Debug.Log("respawned 1 frame : " + Time.frameCount + " " + spawnedObject.name);
 
         spawnedObject.gameObject.SetActive(true);
     }

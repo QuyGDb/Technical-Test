@@ -13,6 +13,22 @@ public class AnimalSpawner : MultiObjectSpawner
     /// Need first object start at around positionZboundStart, so offset = 1 to seaparate other objects
     /// </summary>
     private int offset = 1;
+
+    private void Awake()
+    {
+        StaticEventHandler.OnAnimalOverlapped += OnAnimalOverlapped;
+    }
+
+    private void OnDestroy()
+    {
+        StaticEventHandler.OnAnimalOverlapped -= OnAnimalOverlapped;
+    }
+
+    private void OnAnimalOverlapped(SpawnedObject spawned)
+    {
+        Respawn(spawned);
+    }
+
     public override void SpawnObject(LevelDetails levelDetails)
     {
         List<Vector3> randomSpawnPositionList = GetRandomSpawnPositionList(levelDetails);

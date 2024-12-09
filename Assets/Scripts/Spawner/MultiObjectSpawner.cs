@@ -9,19 +9,7 @@ public abstract class MultiObjectSpawner : MonoBehaviour
     protected float positionXboundRight = 3.5f;
     protected int positionZboundStart = 30;
 
-    protected virtual void OnEnable()
-    {
-        StaticEventHandler.OnObjectOverlapped += StaticEventHandler_ObjectOverlapped;
-    }
 
-    protected virtual void OnDisable()
-    {
-        StaticEventHandler.OnObjectOverlapped -= StaticEventHandler_ObjectOverlapped;
-    }
-    protected virtual void StaticEventHandler_ObjectOverlapped(SpawnedObject spawnedObject)
-    {
-        Respawn(spawnedObject);
-    }
     protected void Respawn(SpawnedObject spawnedObject)
     {
         //obstacle.transform.position = new Vector3(Random.Range(positionXboundLeft, positionXboundRight), 0, Random.Range(positionZboundStart, positionZboundEnd));
