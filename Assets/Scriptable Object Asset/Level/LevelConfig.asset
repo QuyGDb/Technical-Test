@@ -16,5 +16,5 @@ MonoBehaviour:
   tsunamiVelocityLineTwoMultiplier: 5
   levelMultiplierLineOneInterval: 2
   levelMultiplierLineTwoInterval: 2
-  obstacleLevelMultiplier: 6
+  obstacleLevelMultiplier: 98
   animalLevelMultiplier: 1

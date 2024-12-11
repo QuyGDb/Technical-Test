@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phaseOneLength: 400
   phaseTwoLength: 400
-  obstaclesQuantity: 50
+  obstaclesQuantity: 10
   animalsQuantity: 5
   tsunamiVelocityPhaseOne: 10
   tsunamiVelocityPhaseTwo: 20
