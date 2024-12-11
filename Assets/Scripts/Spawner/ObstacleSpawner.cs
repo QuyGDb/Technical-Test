@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class ObstacleSpawner : MultiObjectSpawner
@@ -9,7 +10,6 @@ public class ObstacleSpawner : MultiObjectSpawner
     private int baseObstacleType = 5;
     protected int nearEndRoadOffset = 35;
     private int positionZboundEnd;
-    private WaitForSeconds respawnTime = new WaitForSeconds(2f);
 
     /// <summary>
     /// Respawn the obstacle to a new random position
@@ -54,8 +54,8 @@ public class ObstacleSpawner : MultiObjectSpawner
     protected override List<Vector3> GetRandomSpawnPositionList(LevelDetails levelDetails)
     {
 
-        //  positionZboundEnd = levelDetails.phaseOneRoadSegmentCount * Settings.roadSegmentLength - nearEndRoadOffset;
-        positionZboundEnd = 50;
+        positionZboundEnd = levelDetails.phaseOneRoadSegmentCount * Settings.roadSegmentLength - nearEndRoadOffset;
+        //positionZboundEnd = 50;
         int controlledObstacleCount = levelDetails.obstaclesQuantity / 2;
         float distanceBetweenObstacles = (positionZboundEnd - positionZboundStart) / controlledObstacleCount;
         List<Vector3> controlledRandomObstacles = new List<Vector3>();
@@ -78,11 +78,8 @@ public class ObstacleSpawner : MultiObjectSpawner
     protected override IEnumerator RespawnCoroutine(SpawnedObject spawnedObject)
     {
         spawnedObject.gameObject.SetActive(false);
-        Debug.Log("respawn frame : " + Time.frameCount + spawnedObject.name + " ");
-        yield return respawnTime;
+        yield return null;
         spawnedObject.transform.position = new Vector3(Random.Range(positionXboundLeft, positionXboundRight), 0, Random.Range(positionZboundStart, positionZboundEnd));
-        Debug.Log("respawned 1 frame : " + Time.frameCount + " " + spawnedObject.name);
-
         spawnedObject.gameObject.SetActive(true);
     }
 

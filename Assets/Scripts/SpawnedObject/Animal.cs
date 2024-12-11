@@ -63,11 +63,13 @@ public class Animal : SpawnedObject
         Collider[] hitColliders = Physics.OverlapBox(boxCollider.bounds.center, boxCollider.bounds.size / 2, Quaternion.identity);
         foreach (var hitCollider in hitColliders)
         {
-            if ((layerMask.value & 1 << hitCollider.gameObject.layer) > 0 && hitCollider.gameObject != gameObject)
+            if (hitCollider == boxCollider)
+                continue;
+            if ((layerMask.value & 1 << hitCollider.gameObject.layer) > 0)
             {
                 StaticEventHandler.CallAnimalOverlappedEvent(this);
                 gameObject.SetActive(false);
-
+                break;
             }
         }
     }
