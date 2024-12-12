@@ -73,6 +73,7 @@ public class ObstacleSpawner : MultiObjectSpawner
             Vector3 controlledPositon = new Vector3(UnityEngine.Random.Range(positionXboundLeft, positionXboundRight),
                 0, positionZboundStart + distanceBetweenObstacles * i + UnityEngine.Random.Range(-2, 2));
             controlledRandomObstacles.Add(controlledPositon);
+            Debug.Log(controlledPositon);
         }
         for (int i = controlledObstacleCount; i < levelDetails.obstaclesQuantity; i++)
         {
