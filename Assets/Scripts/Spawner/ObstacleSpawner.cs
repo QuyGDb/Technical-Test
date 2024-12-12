@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -10,7 +11,7 @@ public class ObstacleSpawner : MultiObjectSpawner
     private int baseObstacleType = 5;
     protected int nearEndRoadOffset = 35;
     private int positionZboundEnd;
-
+    private Queue<Action> OverlappingActionQueue = new Queue<Action>();
     /// <summary>
     /// Respawn the obstacle to a new random position
     /// </summary
@@ -24,18 +25,25 @@ public class ObstacleSpawner : MultiObjectSpawner
     {
         StaticEventHandler.OnObstacleOverlap -= OnObstacleOverlapped;
     }
-
+    private void Update()
+    {
+        if (OverlappingActionQueue.Count == 0)
+            return;
+        OverlappingActionQueue.Dequeue().Invoke();
+    }
     private void OnObstacleOverlapped(SpawnedObject spawned)
     {
-        Respawn(spawned);
+        OverlappingActionQueue.Enqueue(() => Respawn(spawned));
+        Debug.Log(OverlappingActionQueue.Count);
     }
+
     public override void SpawnObject(LevelDetails levelDetails)
     {
         List<Vector3> randomSpawnPositionList = GetRandomSpawnPositionList(levelDetails);
         for (int i = 0; i < levelDetails.obstaclesQuantity; i++)
         {
-            GameObject randomObstacle = obstaclePrefabs[Random.Range(0, CalculateObjectTypeAppear(levelDetails.level))];
-            Vector3 eulerAngles = new Vector3(0, Random.Range(0, 360), 0);
+            GameObject randomObstacle = obstaclePrefabs[UnityEngine.Random.Range(0, CalculateObjectTypeAppear(levelDetails.level))];
+            Vector3 eulerAngles = new Vector3(0, UnityEngine.Random.Range(0, 360), 0);
             Quaternion rotation = Quaternion.Euler(eulerAngles);
             Instantiate(randomObstacle, randomSpawnPositionList[i], rotation, transform);
         }
@@ -62,14 +70,14 @@ public class ObstacleSpawner : MultiObjectSpawner
 
         for (int i = 0; i < controlledObstacleCount; i++)
         {
-            Vector3 controlledPositon = new Vector3(Random.Range(positionXboundLeft, positionXboundRight),
-                0, positionZboundStart + distanceBetweenObstacles * i + Random.Range(-2, 2));
+            Vector3 controlledPositon = new Vector3(UnityEngine.Random.Range(positionXboundLeft, positionXboundRight),
+                0, positionZboundStart + distanceBetweenObstacles * i + UnityEngine.Random.Range(-2, 2));
             controlledRandomObstacles.Add(controlledPositon);
         }
         for (int i = controlledObstacleCount; i < levelDetails.obstaclesQuantity; i++)
         {
-            Vector3 randomPositon = new Vector3(Random.Range(positionXboundLeft, positionXboundRight),
-                0, Random.Range(positionZboundStart, positionZboundEnd));
+            Vector3 randomPositon = new Vector3(UnityEngine.Random.Range(positionXboundLeft, positionXboundRight),
+                0, UnityEngine.Random.Range(positionZboundStart, positionZboundEnd));
             controlledRandomObstacles.Add(randomPositon);
         }
         return controlledRandomObstacles;
@@ -79,7 +87,7 @@ public class ObstacleSpawner : MultiObjectSpawner
     {
         spawnedObject.gameObject.SetActive(false);
         yield return null;
-        spawnedObject.transform.position = new Vector3(Random.Range(positionXboundLeft, positionXboundRight), 0, Random.Range(positionZboundStart, positionZboundEnd));
+        spawnedObject.transform.position = new Vector3(UnityEngine.Random.Range(positionXboundLeft, positionXboundRight), 0, UnityEngine.Random.Range(positionZboundStart, positionZboundEnd));
         spawnedObject.gameObject.SetActive(true);
     }
 
